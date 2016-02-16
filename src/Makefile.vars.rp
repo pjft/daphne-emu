@@ -8,4 +8,4 @@ PFLAGS = ${DFLAGS} `sdl-config --cflags` -DUNIX -DLINUX \
 
 
 # platform-specific lib flags
-LIBS = `sdl-config --libs` -ldl -lz -logg -lvorbis -lvorbisfile -lGLEW
+LIBS = `sdl-config --libs` -ldl -lz -logg -lvorbis -lvorbisfile -lGLEW -lGL
