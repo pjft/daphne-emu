@@ -28,7 +28,7 @@
 enum { CPU_UNDEFINED, CPU_Z80, CPU_X86, CPU_M6809, CPU_M6502, CPU_COP421, CPU_I88, CPU_COUNT };	// cpu's supported by daphne now, leave CPU_COUNT at the end
 
 #define CPU_MEM_SIZE	0x100000	// 1 meg for I86
-#define MAX_CONTEXT_SIZE	100	/* max # of bytes that a cpu context can have */
+#define MAX_CONTEXT_SIZE	104	/* max # of bytes that a cpu context can have */
 #define MAX_IRQS	4	/* how many IRQs we will support per CPU */
 
 struct cpudef;
