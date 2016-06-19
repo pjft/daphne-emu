@@ -1,5 +1,15 @@
 #!/bin/sh
 
+SCRIPT_DIR=`dirname "$0"`
+DAPHNE_BIN=daphne.bin
+
+
+echo "Daphne Launcher : Script dir is $SCRIPT_DIR"
+cd "$SCRIPT_DIR"
+
+# point to our linked libs that user may not have
+LD_LIBRARY_PATH=$PWD:$LD_LIBRARY_PATH
+
 if [ -z $1 ] ; then
 	echo "Specify a game to try: ace astron badlands bega cliff cobra esh"
 	echo "\tgalaxyr gpworld interstellar lair lair2 mach3 rb sdq tq uvt"
@@ -19,7 +29,7 @@ case "$1" in
 esac
 
 #strace -o strace.txt \
-./daphne $1 vldp \
+./$DAPHNE_BIN $1 vldp \
 -framefile ~/.daphne/$VLDP_DIR/$1/$1.txt \
 -homedir ~/.daphne \
 -datadir ~/.daphne \
@@ -32,3 +42,18 @@ esac
 
 #-bank 0 11111001 \
 #-bank 1 00100111 \
+
+EXIT_CODE=$?
+
+if [ "$EXIT_CODE" -ne "0" ] ; then
+	if [ "$EXIT_CODE" -eq "127" ]; then
+		echo ""
+		echo "Daphne failed to start."
+		echo "This is probably due to a library problem."
+		echo "Run ./daphne.bin directly to see which libraries are missing."
+		echo ""
+	else
+		echo "DaphneLoader failed with an unknown exit code : $EXIT_CODE."
+	fi
+fi
+
