@@ -14,8 +14,10 @@ something of a continuation until the author decides to do something
 official.
 
 **Compiling Daphne on Linux**
-I'm not sure anymore how to get Daphne compiled for 32-bit Linux.  Here 
-I'll assume we're working on an amd64 processor.
+
+These instructions will work to get Daphne built on a machine using an 
+amd64 processor.  I'm not sure anymore how to get Daphne compiled for 
+32-bit Linux.
 
 `cd src/vldp2`
 
@@ -25,6 +27,21 @@ I'll assume we're working on an amd64 processor.
 
 `cd ..`
 
-`ln -s Makefile.vars.linux_x86 Makefile.vars`
+`ln -s Makefile.vars.linux_x64 Makefile.vars`
 
 `make`
+
+**Running Daphne**
+
+Daphne is highly dependent on a front-end for ease of use.  
+Unfortunately the standard front-end is closed-source.  I've been 
+working off and on to create a new graphical front-end.  In the 
+meantime, I've provided a shell script that works for most of the games: 
+`run.sh`.  It looks for stuff in $HOME/.daphne.  Footage and audio for 
+Space Ace, Dragon's Lair 1 and 2, and Thayer's Quest are found in 
+$HOME/.daphne/vldp_dl.  The others are found in $HOME/.daphne/vldp.  
+This script takes care of those differences.  The reason for this 
+weirdness is how the old front end set things up.  It would download the 
+footage and audio for those games if you inserted a DVD of the same 
+title and store it in vldp_dl..  Other stuff it downloaded went into 
+vldp/.

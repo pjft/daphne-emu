@@ -1,14 +1,26 @@
 #!/bin/sh
 
 if [ -z $1 ] ; then
-	echo "Specify a game to try: astron badlands bega cliff cobra esh"
-	echo "\tgalaxyr gpworld interstellar mach3 rb sdq uvt"
+	echo "Specify a game to try: ace astron badlands bega cliff cobra esh"
+	echo "\tgalaxyr gpworld interstellar lair lair2 mach3 rb sdq tq uvt"
 	exit
 fi
 
+case "$1" in
+	"lair") VLDP_DIR="vldp_dl"
+	;;
+	"lair2") VLDP_DIR="vldp_dl"
+	;;
+	"ace") VLDP_DIR="vldp_dl"
+	;;
+	"tq") VLDP_DIR="vldp_dl"
+	;;
+	*) VLDP_DIR="vldp"
+esac
+
 #strace -o strace.txt \
 ./daphne $1 vldp \
--framefile ~/.daphne/vldp/$1/$1.txt \
+-framefile ~/.daphne/$VLDP_DIR/$1/$1.txt \
 -homedir ~/.daphne \
 -datadir ~/.daphne \
 -blank_searches \
