@@ -4,33 +4,22 @@ SCRIPT_DIR=`dirname "$0"`
 DAPHNE_BIN=daphne.bin
 DAPHNE_SHARE=~/.daphne
 
-echo "Daphne Launcher : Script dir is $SCRIPT_DIR"
+echo "Singe Launcher : Script dir is $SCRIPT_DIR"
 cd "$SCRIPT_DIR"
 
 # point to our linked libs that user may not have
 LD_LIBRARY_PATH=$PWD:$LD_LIBRARY_PATH
 
 if [ -z $1 ] ; then
-	echo "Specify a game to try: ace astron badlands bega cliff cobra esh"
-	echo "\tgalaxyr gpworld interstellar lair lair2 mach3 rb sdq tq uvt"
+	echo "Specify a game to try: timegal"
 	exit
 fi
 
-case "$1" in
-	"lair") VLDP_DIR="vldp_dl"
-	;;
-	"lair2") VLDP_DIR="vldp_dl"
-	;;
-	"ace") VLDP_DIR="vldp_dl"
-	;;
-	"tq") VLDP_DIR="vldp_dl"
-	;;
-	*) VLDP_DIR="vldp"
-esac
 
 #strace -o strace.txt \
-./$DAPHNE_BIN $1 vldp \
--framefile $DAPHNE_SHARE/$VLDP_DIR/$1/$1.txt \
+./$DAPHNE_BIN singe vldp \
+-framefile $DAPHNE_SHARE/singe/$1/$1.txt \
+-script $DAPHNE_SHARE/singe/$1/$1.singe \
 -homedir $DAPHNE_SHARE \
 -datadir $DAPHNE_SHARE \
 -blank_searches \
