@@ -1,6 +1,7 @@
 #!/bin/sh
 
 SCRIPT_DIR=`dirname "$0"`
+if realpath / >/dev/null; then SCRIPT_DIR=$(realpath "$SCRIPT_DIR"); fi
 DAPHNE_BIN=daphne.bin
 DAPHNE_SHARE=~/.daphne
 
@@ -8,7 +9,7 @@ echo "Daphne Launcher : Script dir is $SCRIPT_DIR"
 cd "$SCRIPT_DIR"
 
 # point to our linked libs that user may not have
-LD_LIBRARY_PATH=$PWD:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$SCRIPT_DIR:$DAPHNE_SHARE:$LD_LIBRARY_PATH
 
 if [ -z $1 ] ; then
 	echo "Specify a game to try: ace astron badlands bega cliff cobra esh"
@@ -17,19 +18,16 @@ if [ -z $1 ] ; then
 fi
 
 case "$1" in
-	"lair") VLDP_DIR="vldp_dl"
+    lair|lair2|ace|tq)
+	VLDP_DIR="vldp_dl"
+	FASTBOOT="-fastboot"		   
 	;;
-	"lair2") VLDP_DIR="vldp_dl"
-	;;
-	"ace") VLDP_DIR="vldp_dl"
-	;;
-	"tq") VLDP_DIR="vldp_dl"
-	;;
-	*) VLDP_DIR="vldp"
+    *) VLDP_DIR="vldp"
 esac
 
 #strace -o strace.txt \
 ./$DAPHNE_BIN $1 vldp \
+$FASTBOOT \
 -framefile $DAPHNE_SHARE/$VLDP_DIR/$1/$1.txt \
 -homedir $DAPHNE_SHARE \
 -datadir $DAPHNE_SHARE \
