@@ -258,6 +258,12 @@ void CFG_Keys()
 
 		mpo_close(io);
 	} // end if file was opened successfully
+	for (int i = 0; i < (int) (sizeof(joystick_buttons_map) / sizeof(int)); i++)
+	{
+
+	if (joystick_buttons_map[i] != -1) printf("button:%d mapped to %s \n", i,g_key_names[joystick_buttons_map[i]]);
+	else printf("button:%d mapped to not set\n",i);
+	}
 }
 
 int SDL_input_init()
