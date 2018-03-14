@@ -29,6 +29,13 @@ amd64 processor.  I'm not sure anymore how to get Daphne compiled for
     mkdir -p ~/.daphne
     cp -a pics sound ~/.daphne/
 
+### Missing libraries?
+
+Cutting and pasting the following in a Debian GNU/Linux system (or
+derivative), will install all prerequisite libraries.
+
+    sudo apt install libsdl-dev libglew-dev libvorbis-dev
+
 ##Running Daphne
 
 Daphne is highly dependent on a front-end for ease of use.  
