@@ -36,6 +36,17 @@ derivative), will install all prerequisite development libraries.
 
     sudo apt install libsdl-dev libglew-dev libvorbis-dev
 
+## Laserdisc images and ROMs
+
+The laserdisc and game ROMs necessary to play a game are not included
+here. You'll need to buy those from [Digital
+Leisure](http://digitalleisure.com) and copy them into
+`~/.daphne/vldp_dl/` and `~/.daphne/roms`, respectively.
+
+If you do not install them, you'll get an error message like:
+
+    ROM dl_f2_u1.bin couldn't be found in roms/lair/, or in ./roms/lair.zip
+
 ## Running Daphne
 
 This version of daphne comes with a simple command line frontend:
