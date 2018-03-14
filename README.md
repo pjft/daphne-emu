@@ -1,19 +1,19 @@
 Daphne: the First Ever Multiple Arcade Laserdisc Emulator
 =========================================================
 
----
-
 Daphne, the First Ever Multiple Arcade Laserdisc Emulator is a program 
 that lets one play the original versions of many laserdisc arcade games 
 on one's PC.
 
 The official website for Daphne is http://www.daphne-emu.com.
 
+---
+
 As development for Daphne has stopped, this repository is intended as 
 something of a continuation until the author decides to do something 
 official.
 
-**Compiling Daphne on Linux**
+##Compiling Daphne on Linux
 
 These instructions will work to get Daphne built on a machine using an 
 amd64 processor.  I'm not sure anymore how to get Daphne compiled for 
@@ -29,7 +29,7 @@ amd64 processor.  I'm not sure anymore how to get Daphne compiled for
     mkdir -p ~/.daphne
     cp -a pics sound ~/.daphne/
 
-**Running Daphne**
+##Running Daphne
 
 Daphne is highly dependent on a front-end for ease of use.  
 Unfortunately the standard front-end is closed-source.  I've been 
