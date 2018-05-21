@@ -110,6 +110,7 @@ int g_key_defs[SWITCH_COUNT][2] =
 // from dapinput.sh
 
 int joystick_buttons_map[10] = {
+	-1,	// button 0
 	-1,	// button 1
 	-1,	// button 2
 	-1,	// button 3
@@ -119,7 +120,6 @@ int joystick_buttons_map[10] = {
 	-1,	// button 7
 	-1,	// button 8
 	-1	// button 9
-	-1	// button 10
 };
 #else
 // button mapping for gp2x
@@ -168,7 +168,7 @@ void CFG_Keys()
 //	bool done = false;
 	// find where the dapinput ini file is (if the file doesn't exist, this string will be empty)
 	string strDapInput = g_homedir.find_file("dapinput.ini", true);
-int max_buttons = (int) (sizeof(joystick_buttons_map) / sizeof(int));
+	int max_buttons = (int) (sizeof(joystick_buttons_map) / sizeof(int));
 	io = mpo_open(strDapInput.c_str(), MPO_OPEN_READONLY);
 	if (io)
 	{
@@ -224,9 +224,14 @@ int max_buttons = (int) (sizeof(joystick_buttons_map) / sizeof(int));
 											g_key_defs[i][1] = val2;
 
 											// if zero then no mapping necessary, just use default, if any
+										 	//printf("val3:%d max_buttons:%d\n",val3,max_buttons);
+
 											if ( val3 -1  < max_buttons)
 											{
-												if (val3 > 0 ) joystick_buttons_map[val3 - 1] = i;
+												if (val3 >= 1 )
+												{
+												 joystick_buttons_map[val3 - 1] = i;
+												}
 											}
 											else printf("sorry we only support %d joystick buttons we could not map button %d please check your dapinput.ini\n",max_buttons, val3 - 1 );
 											found_match = true;
@@ -264,10 +269,10 @@ int max_buttons = (int) (sizeof(joystick_buttons_map) / sizeof(int));
 
 		mpo_close(io);
 	} // end if file was opened successfully
-	for (int i = 0; i < (int) (sizeof(joystick_buttons_map) / sizeof(int)); i++)
+	for (int i = 0; i < max_buttons; i++)
 	{
 
-	if (joystick_buttons_map[i] != -1) printf("button:%d mapped to %s \n", i,g_key_names[joystick_buttons_map[i]]);
+	if  ( (joystick_buttons_map[i]  !=-1 )  )  printf("button:%d mapped to %s \n", i,g_key_names[joystick_buttons_map[i]]);
 	else printf("button:%d mapped to not set\n",i);
 	}
 }
