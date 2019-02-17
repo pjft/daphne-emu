@@ -292,8 +292,31 @@ int SDL_input_init()
 	}
 	g_sticky_coin_cycles = (Uint32) (STICKY_COIN_SECONDS * get_cpu_hz(0));	// only needs to be calculated once
 
+
+
+
+
 	if (SDL_InitSubSystem(SDL_INIT_JOYSTICK) >= 0)
 	{
+		//add joystick info listings for debugging
+		printf("There are %d joysticks attached\n", SDL_NumJoysticks());
+		for ( i=0; i<SDL_NumJoysticks(); ++i )
+		{
+			name = SDL_JoystickName(i);
+			printf("Joystick %d: %s\n",i,name ? name : "Unknown Joystick");
+			G_joystick = SDL_JoystickOpen(i);
+			if (joystick == NULL) 
+				fprintf(stderr, "SDL_JoystickOpen(%d) failed: %s\n", i, SDL_GetError());
+			else
+			{
+				printf("       axes: %d\n", SDL_JoystickNumAxes(G_joystick));
+				printf("      balls: %d\n", SDL_JoystickNumBalls(G_joystick));
+				printf("       hats: %d\n", SDL_JoystickNumHats(G_joystick));
+				printf("    buttons: %d\n", SDL_JoystickNumButtons(G_joystick));
+				SDL_JoystickClose(G_joystick);
+			}
+		}
+		//end of debug info
 		// if joystick usage is enabled
 		if (g_use_joystick)
 		{
