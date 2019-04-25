@@ -13,9 +13,13 @@ export LD_LIBRARY_PATH=$SCRIPT_DIR:$DAPHNE_SHARE:$LD_LIBRARY_PATH
 
 if [ -z "$1" ] ; then
     echo "Specify a game to try: "
+    echo
+    echo "\t$0 [gamename]"
+
+
     for game in ace astron badlands bega cliff cobra esh galaxyr gpworld interstellar lair lair2 mach3 rb sdq tq uvt; do
 	if ls ~/.daphne/vldp*/$game >/dev/null 2>&1; then
-	    echo "\t$game"
+	    installed="$installed $game"
 	else
 	    uninstalled="$uninstalled $game"
 	fi
@@ -25,7 +29,19 @@ if [ -z "$1" ] ; then
 	echo "Games not found in ~/.daphne/vldp*: "
 	echo "$uninstalled" | fold -s -w60 | sed 's/^ //; s/^/\t/'
     fi
-    exit 1
+    if [ -z "$installed" ]; then
+	cat <<EOF 
+	No games installed. Please purchase game DVDs from
+   	DigitalLeisure.com and put the required files in
+	~/.daphne/vldp_dl/"
+EOF
+	exit 1
+    else   
+	echo
+	echo "Games available: "
+	echo "$installed" | fold -s -w60 | sed 's/^ //; s/^/\t/'
+	exit 1
+    fi
 fi
 
 case "$1" in
