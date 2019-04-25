@@ -31,17 +31,16 @@ if [ -z "$1" ] ; then
     fi
     if [ -z "$installed" ]; then
 	cat <<EOF 
-	No games installed. Please purchase game DVDs from
-   	DigitalLeisure.com and put the required files in
-	~/.daphne/vldp_dl/"
+
+Error: No games installed. DVDs can be purchased from DigitalLeisure.com.
+       Please put the required files in ~/.daphne/vldp_dl/gamename/
 EOF
-	exit 1
     else   
 	echo
 	echo "Games available: "
 	echo "$installed" | fold -s -w60 | sed 's/^ //; s/^/\t/'
-	exit 1
     fi
+    exit 1
 fi
 
 case "$1" in
