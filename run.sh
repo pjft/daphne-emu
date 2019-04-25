@@ -11,6 +11,11 @@ cd "$SCRIPT_DIR"
 # point to our linked libs that user may not have
 export LD_LIBRARY_PATH=$SCRIPT_DIR:$DAPHNE_SHARE:$LD_LIBRARY_PATH
 
+if [ "$1" = "-fullscreen" ]; then
+    FULLSCREEN="-fullscreen"
+    shift
+fi
+
 if [ -z "$1" ] ; then
     echo "Specify a game to try: "
     echo
@@ -65,9 +70,6 @@ $FASTBOOT \
 -noserversend \
 -x 640 \
 -y 480
-
-#-x 1920 \
-#-y 1080
 
 #-bank 0 11111001 \
 #-bank 1 00100111 \
