@@ -11,10 +11,21 @@ cd "$SCRIPT_DIR"
 # point to our linked libs that user may not have
 export LD_LIBRARY_PATH=$SCRIPT_DIR:$DAPHNE_SHARE:$LD_LIBRARY_PATH
 
-if [ -z $1 ] ; then
-	echo "Specify a game to try: ace astron badlands bega cliff cobra esh"
-	echo "\tgalaxyr gpworld interstellar lair lair2 mach3 rb sdq tq uvt"
-	exit
+if [ -z "$1" ] ; then
+    echo "Specify a game to try: "
+    for game in ace astron badlands bega cliff cobra esh galaxyr gpworld interstellar lair lair2 mach3 rb sdq tq uvt; do
+	if ls ~/.daphne/vldp*/$game >/dev/null 2>&1; then
+	    echo "\t$game"
+	else
+	    uninstalled="$uninstalled $game"
+	fi
+    done
+    if [ "$uninstalled" ]; then
+	echo
+	echo "Games not found in ~/.daphne/vldp*: "
+	echo "$uninstalled" | fold -s -w60 | sed 's/^ //; s/^/\t/'
+    fi
+    exit 1
 fi
 
 case "$1" in
@@ -28,6 +39,7 @@ esac
 #strace -o strace.txt \
 ./$DAPHNE_BIN $1 vldp \
 $FASTBOOT \
+-fullscreen \
 -framefile $DAPHNE_SHARE/$VLDP_DIR/$1/$1.txt \
 -homedir $DAPHNE_SHARE \
 -datadir $DAPHNE_SHARE \
@@ -38,6 +50,9 @@ $FASTBOOT \
 -noserversend \
 -x 640 \
 -y 480
+
+#-x 1920 \
+#-y 1080
 
 #-bank 0 11111001 \
 #-bank 1 00100111 \
