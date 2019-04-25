@@ -13,7 +13,7 @@ As development for Daphne has stopped, this repository is intended as
 something of a continuation until the author decides to do something 
 official.
 
-##Compiling Daphne on Linux
+## Compiling Daphne on Linux
 
 These instructions will work to get Daphne built on a machine using an 
 amd64 processor.  I'm not sure anymore how to get Daphne compiled for 
