@@ -19,7 +19,7 @@ fi
 if [ -z "$1" ] ; then
     echo "Specify a game to try: "
     echo
-    echo "\t$0 [gamename]"
+    echo "\t$0 [-fullscreen] <gamename>"
 
 
     for game in ace astron badlands bega cliff cobra esh galaxyr gpworld interstellar lair lair2 mach3 rb sdq tq uvt; do
@@ -59,7 +59,7 @@ esac
 #strace -o strace.txt \
 ./$DAPHNE_BIN $1 vldp \
 $FASTBOOT \
--fullscreen \
+$FULLSCREEN \
 -framefile $DAPHNE_SHARE/$VLDP_DIR/$1/$1.txt \
 -homedir $DAPHNE_SHARE \
 -datadir $DAPHNE_SHARE \
