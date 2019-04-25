@@ -11,10 +11,41 @@ cd "$SCRIPT_DIR"
 # point to our linked libs that user may not have
 export LD_LIBRARY_PATH=$SCRIPT_DIR:$DAPHNE_SHARE:$LD_LIBRARY_PATH
 
-if [ -z $1 ] ; then
-	echo "Specify a game to try: ace astron badlands bega cliff cobra esh"
-	echo "\tgalaxyr gpworld interstellar lair lair2 mach3 rb sdq tq uvt"
-	exit
+if [ "$1" = "-fullscreen" ]; then
+    FULLSCREEN="-fullscreen"
+    shift
+fi
+
+if [ -z "$1" ] ; then
+    echo "Specify a game to try: "
+    echo
+    echo "\t$0 [-fullscreen] <gamename>"
+
+
+    for game in ace astron badlands bega cliff cobra esh galaxyr gpworld interstellar lair lair2 mach3 rb sdq tq uvt; do
+	if ls ~/.daphne/vldp*/$game >/dev/null 2>&1; then
+	    installed="$installed $game"
+	else
+	    uninstalled="$uninstalled $game"
+	fi
+    done
+    if [ "$uninstalled" ]; then
+	echo
+	echo "Games not found in ~/.daphne/vldp*: "
+	echo "$uninstalled" | fold -s -w60 | sed 's/^ //; s/^/\t/'
+    fi
+    if [ -z "$installed" ]; then
+	cat <<EOF 
+
+Error: No games installed. DVDs can be purchased from DigitalLeisure.com.
+       Please put the required files in ~/.daphne/vldp_dl/gamename/
+EOF
+    else   
+	echo
+	echo "Games available: "
+	echo "$installed" | fold -s -w60 | sed 's/^ //; s/^/\t/'
+    fi
+    exit 1
 fi
 
 case "$1" in
@@ -28,6 +59,7 @@ esac
 #strace -o strace.txt \
 ./$DAPHNE_BIN $1 vldp \
 $FASTBOOT \
+$FULLSCREEN \
 -framefile $DAPHNE_SHARE/$VLDP_DIR/$1/$1.txt \
 -homedir $DAPHNE_SHARE \
 -datadir $DAPHNE_SHARE \
