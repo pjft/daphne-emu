@@ -67,6 +67,7 @@ static const unsigned int FREQ1000 = AUDIO_FREQ * 1000;	// let compiler compute 
 
 // video overlay stuff
 Sint32 g_vertical_offset = 0;	// (used a lot, we only want to calc it once)
+Sint32 p_vertical_offset = 0;	// Used as a positive respresentation of g_vertical_offset
 
 double g_dPercentComplete01 = 0.0;	// send by child thread to indicate how far our parse is complete
 bool g_bGotParseUpdate = false;	// if true, it means we've received a parse update from VLDP
@@ -222,6 +223,9 @@ bool ldp_vldp::init_player()
 						{
 							// this number is used repeatedly, so we calculate it once
 							g_vertical_offset = g_game->get_video_row_offset();
+
+							// Get the offset as a positive integer is g_vertical_offset is negative
+							if ( g_vertical_offset < 0) p_vertical_offset = abs(g_vertical_offset);
 
 							// if testing has been requested then run them ...
 							if (m_testing)
@@ -1727,10 +1731,14 @@ int prepare_frame_callback_with_overlay(struct yuv_buf *src)
 		// sanity check.  Make sure the game video is the proper width.
 		if ((gamevid->w << 1) == g_hw_overlay->w)
 		{
-			// adjust for vertical offset
-			// We use _half_ of the requested vertical offset because the mpeg video is twice
-			// the size of the overlay
+			// Adjust for vertical offset
+			// We use _half_ of the requested vertical offset because the mpeg video is twice the size of the overlay.
+#if __x86_64__
+			// This is mangled in 64bit land, we now offset with positive p_vertical_offset of negative g_vertical_offset value to align correctly.
+			Uint8 *gamevid_pixels = (Uint8 *) gamevid->pixels + (gamevid->w * ((g_vertical_offset - g_vertical_stretch) + (p_vertical_offset * 2 )));
+#else
 			Uint8 *gamevid_pixels = (Uint8 *) gamevid->pixels - (gamevid->w * (g_vertical_offset - g_vertical_stretch));
+#endif
 			
 #ifdef DEBUG
 			// make sure that the g_vertical_offset isn't out of bounds
