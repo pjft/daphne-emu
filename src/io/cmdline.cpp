@@ -705,6 +705,13 @@ bool parse_cmd_line(int argc, char **argv)
 				result = false;
 			}
 		}
+
+		// specify an alternate dapinput.ini file (located in home or app directory)
+		else if (strcasecmp(s, "-keymapfile")==0)
+		{
+			get_next_word(s, sizeof(s));
+			set_inputini_file(s);
+		}
 		
 		// if they are defining an alternate soundtrack to be used by VLDP
 		else if (strcasecmp(s, "-altaudio")==0)
@@ -886,6 +893,14 @@ bool parse_cmd_line(int argc, char **argv)
 
 			get_next_word(s, sizeof(s));
 			i = atoi(s);
+			if (i > 25) {
+				i=25;
+				printline("WARNING: vertical stretch restricted to 25 max.");
+			}
+			if (i < 0) {
+				i=0;
+				printline("WARNING: vertical stretch cannot be negative. zeroed.");
+			}
 			if (the_ldp != NULL)
 			{
 				the_ldp->set_vertical_stretch(i);

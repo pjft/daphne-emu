@@ -224,8 +224,8 @@ bool ldp_vldp::init_player()
 							// this number is used repeatedly, so we calculate it once
 							g_vertical_offset = g_game->get_video_row_offset();
 
-							// Get the offset as a positive integer is g_vertical_offset is negative
-							if ( g_vertical_offset < 0) p_vertical_offset = abs(g_vertical_offset);
+							// Get the offset as a positive integer if g_vertical_offset is negative
+							if (g_vertical_offset < 0) p_vertical_offset = abs(g_vertical_offset);
 
 							// if testing has been requested then run them ...
 							if (m_testing)
@@ -1733,9 +1733,12 @@ int prepare_frame_callback_with_overlay(struct yuv_buf *src)
 		{
 			// Adjust for vertical offset
 			// We use _half_ of the requested vertical offset because the mpeg video is twice the size of the overlay.
-#if __x86_64__
-			// This is mangled in 64bit land, we now offset with positive p_vertical_offset of negative g_vertical_offset value to align correctly.
-			Uint8 *gamevid_pixels = (Uint8 *) gamevid->pixels + (gamevid->w * ((g_vertical_offset - g_vertical_stretch) + (p_vertical_offset * 2 )));
+
+#if (__x86_64__ && __linux__)
+			// In 64bit linux, we get segfault on negative vertical offset, so negate the negative to align correctly + check.
+			int check_offset = ((g_vertical_offset - g_vertical_stretch) + (p_vertical_offset * 2));
+			if (check_offset < 0) check_offset = 0;
+			Uint8 *gamevid_pixels = (Uint8 *) gamevid->pixels + (gamevid->w * check_offset);
 #else
 			Uint8 *gamevid_pixels = (Uint8 *) gamevid->pixels - (gamevid->w * (g_vertical_offset - g_vertical_stretch));
 #endif
