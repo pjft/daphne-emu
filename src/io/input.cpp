@@ -172,8 +172,7 @@ void CFG_Keys()
 	int max_buttons = (int) (sizeof(joystick_buttons_map) / sizeof(int));
 
 #ifdef LINUX
-	string fullpath = strdup(g_inputini_file.c_str());
-	string inifile = basename(fullpath.c_str());
+	string inifile = basename(g_inputini_file.c_str());
 #else
 	string inifile = strdup(g_inputini_file.c_str());
 #endif
