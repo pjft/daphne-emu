@@ -1,6 +1,10 @@
 Daphne Changelog
 -------------------------
 
+v1.0.13.1
+- Add -keymapfile flag to specify alternate dapinput.ini keymap files.
+- Restrict -vertical_stretch values to 0-25 to avoid segfault in g_vertical_offset calculations
+
 v1.0.13
 - Changed inpout library so it only loads (and thus installs itself) if parallel port is actually used.
 
