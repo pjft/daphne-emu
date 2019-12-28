@@ -171,20 +171,14 @@ void CFG_Keys()
 //	bool done = false;
 	int max_buttons = (int) (sizeof(joystick_buttons_map) / sizeof(int));
 
-#ifdef LINUX
-	string inifile = basename(g_inputini_file.c_str());
-#else
-	string inifile = strdup(g_inputini_file.c_str());
-#endif
-
 	if (m_altInputFileSet) {
 		string keyinput_notice = "Loading alternate keymap file: ";
-		keyinput_notice += inifile.c_str();
+		keyinput_notice += g_inputini_file.c_str();
 		printline(keyinput_notice.c_str());
 	}
 
 	// find where the keymap ini file is (if the file doesn't exist, this string will be empty)
-	string strDapInput = g_homedir.find_file(inifile.c_str(), true);
+	string strDapInput = g_homedir.find_file(g_inputini_file.c_str(), true);
 	io = mpo_open(strDapInput.c_str(), MPO_OPEN_READONLY);
 	if (io)
 	{
