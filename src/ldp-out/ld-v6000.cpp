@@ -302,7 +302,7 @@ bool v6000::wait_for_finished()
 {
 
 	const int time_to_finish = 3;	// wait this long to timeout
-	char s[81] = { 0 };
+	char s[48] = { 0 };
 	char debug_string[81] = { 0 };
 //	int status_timer = 0;
 	int finish_timer = 0;

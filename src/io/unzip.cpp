@@ -802,8 +802,8 @@ extern int ZEXPORT unzLocateFile (
 	if (file==NULL)
 		return UNZ_PARAMERROR;
 
-    if (strlen(szFileName)>=UNZ_MAXFILENAMEINZIP)
-        return UNZ_PARAMERROR;
+	if (strlen(szFileName)>=UNZ_MAXFILENAMEINZIP)
+		return UNZ_PARAMERROR;
 
 	s=(unz_s*)file;
 	if (!s->current_file_ok)
@@ -854,11 +854,7 @@ local int unzlocal_CheckCurrentFileCoherencyHeader (
 	*poffset_local_extrafield = 0;
 	*psize_local_extrafield = 0;
 
-//	if (fseek(s->file,s->cur_file_info_internal.offset_curfile +
-//								s->byte_before_the_zipfile,SEEK_SET)!=0)
-	if (!mpo_seek(s->cur_file_info_internal.offset_curfile +
-								s->byte_before_the_zipfile,
-								MPO_SEEK_SET, s->file))	// MPO
+	if (!mpo_seek(s->cur_file_info_internal.offset_curfile + s->byte_before_the_zipfile, MPO_SEEK_SET, s->file))	// MPO
 		return UNZ_ERRNO;
 
 
@@ -884,9 +880,8 @@ local int unzlocal_CheckCurrentFileCoherencyHeader (
 	else if ((err==UNZ_OK) && (uData!=s->cur_file_info.compression_method))
 		err=UNZ_BADZIPFILE;
 
-    if ((err==UNZ_OK) && (s->cur_file_info.compression_method!=0) &&
-                         (s->cur_file_info.compression_method!=Z_DEFLATED))
-        err=UNZ_BADZIPFILE;
+	if ((err==UNZ_OK) && (s->cur_file_info.compression_method!=0) && (s->cur_file_info.compression_method!=Z_DEFLATED))
+		err=UNZ_BADZIPFILE;
 
 	if (unzlocal_getLong(s->file,&uData) != UNZ_OK) /* date/time */	// MPO
 		err=UNZ_ERRNO;
@@ -949,8 +944,8 @@ extern int ZEXPORT unzOpenCurrentFile (
 	if (!s->current_file_ok)
 		return UNZ_PARAMERROR;
 
-    if (s->pfile_in_zip_read != NULL)
-        unzCloseCurrentFile(file);
+	if (s->pfile_in_zip_read != NULL)
+		unzCloseCurrentFile(file);
 
 	if (unzlocal_CheckCurrentFileCoherencyHeader(s,&iSizeVar,
 				&offset_local_extrafield,&size_local_extrafield)!=UNZ_OK)

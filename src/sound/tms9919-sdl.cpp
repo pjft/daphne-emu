@@ -131,7 +131,6 @@ void cSdlTMS9919::AudioCallback ( Uint8 *stream, int length )
 
 //	int volume = ( m_MasterVolume * AUDIO_MAX_VOLUME ) / 100;
 
-    bool mix = false;
     memset ( stream, m_AudioSpec.silence, length );
 
     for ( int i = 0; i < 4; i++ ) {
@@ -141,9 +140,6 @@ void cSdlTMS9919::AudioCallback ( Uint8 *stream, int length )
 		// make sure that attenuation (volume) isn't 15 = off and we have a frequency
 		if (( m_Attenuation [i] != 15 ) && ( info->period >= 1.0 )) 
 		{
-            // new data so we'll need to mix
-			mix = true;
-            
 			// set left = length (number of samples we need to process)
 			int left = length/4, j = 1;
             
@@ -198,13 +194,6 @@ void cSdlTMS9919::AudioCallback ( Uint8 *stream, int length )
         }
     }
 
-//    if ( m_pSpeechSynthesizer != NULL ) {
-//        mix |= m_pSpeechSynthesizer->AudioCallback ( m_MixBuffer, length );
-//    }
-
-    //if ( mix == true ) {
-      //  SDL_MixAudio ( stream, m_MixBuffer, length, volume );
-//    }
 }
 
 int cSdlTMS9919::SetSpeechSynthesizer ( cTMS5220 *speech )

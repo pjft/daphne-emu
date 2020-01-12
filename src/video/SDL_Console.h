@@ -5,7 +5,7 @@
 #include "SDL_ConsoleCommands.h"
 
 
-#define CHARS_PER_LINE	128
+#define CHARS_PER_LINE	256
 
 #ifdef __cplusplus
 extern "C" {

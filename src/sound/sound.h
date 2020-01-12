@@ -23,7 +23,11 @@
 #ifndef SOUND_H
 #define SOUND_H
 
+#ifdef WIN32
 #include <SDL.h>
+#else
+#include <SDL/SDL.h>
+#endif
 
 // header file for sound.c
 

@@ -176,7 +176,7 @@ void print_board_info(unsigned char index,	// which board
 {
 
 	char sequence_type[160] = { 0 };
-	char s1[160] = { 0 };
+	char s1[340] = { 0 };
 	char board_name[160] = { 0 };
 
 	// if we know that we are playing Dragon's Lair
