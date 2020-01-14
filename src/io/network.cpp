@@ -145,12 +145,12 @@ struct net_packet g_packet;	// what we're gonna send
 
 void net_set_gamename(char *gamename)
 {
-	strncpy(g_packet.gamename, gamename, sizeof(g_packet.gamename));
+	strncpy(g_packet.gamename, gamename, sizeof(g_packet.gamename)-1);
 }
 
 void net_set_ldpname(char *ldpname)
 {
-	strncpy(g_packet.ldpname, ldpname, sizeof(g_packet.ldpname));
+	strncpy(g_packet.ldpname, ldpname, sizeof(g_packet.ldpname)-1);
 }
 
 #ifdef WIN32
@@ -236,12 +236,11 @@ unsigned int get_sys_mem()
 	unsigned int mem = 0;
 #ifdef LINUX
 	FILE *F;
-	int iRes = 0;
 	const char *s = "ls -l /proc/kcore | awk '{print $5}'";
 	F = popen(s, "r");
 	if (F)
 	{
-		iRes = fscanf(F, "%u", &mem);	// this breaks if they have over 2 gigs of ram :)
+		fscanf(F, "%u", &mem);	// this breaks if they have over 2 gigs of ram :)
 		pclose(F);
 	}
 
@@ -603,13 +602,13 @@ void net_send_data_to_server()
 					printerror("your OS is unknown in network.cpp, please fix this");
 				}
 
-				strncpy(g_packet.os_desc, get_os_description(), sizeof(g_packet.os_desc));
+				strncpy(g_packet.os_desc, get_os_description(), sizeof(g_packet.os_desc)-1);
 				g_packet.protocol = PROTOCOL_VERSION;
 				g_packet.mhz = get_cpu_mhz();
 				g_packet.mem = get_sys_mem();
-				strncpy(g_packet.video_desc, get_video_description(), sizeof(g_packet.video_desc));
-				strncpy(g_packet.cpu_name, get_cpu_name(), sizeof(g_packet.cpu_name));
-				strncpy(g_packet.daphne_version, get_daphne_version(), sizeof(g_packet.daphne_version));
+				strncpy(g_packet.video_desc, get_video_description(), sizeof(g_packet.video_desc)-1);
+				strncpy(g_packet.cpu_name, get_cpu_name(), sizeof(g_packet.cpu_name)-1);
+				strncpy(g_packet.daphne_version, get_daphne_version(), sizeof(g_packet.daphne_version)-1);
 
 				// now compute CRC32 of the rest of the packet
 				g_packet.crc32 = crc32(0L, Z_NULL, 0);

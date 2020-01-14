@@ -75,12 +75,13 @@ Uint8 timetrav::cpu_mem_read(Uint32 addr)
 	Uint8 result = m_cpumem[addr];
 
 	// Scratch ram
-   if (addr < 0x10000)
+	if (addr < 0x10000)
 	{
+		(void)0;
 	}
-   // ROM
-   else if (addr >= 0xc0000)
+	else if (addr >= 0xc0000)
 	{
+		(void)0;
 	}
 	else 
 	{

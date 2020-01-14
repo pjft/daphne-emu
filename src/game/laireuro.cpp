@@ -149,8 +149,12 @@ void laireuro::do_nmi()
 	// Redraws the screen (if needed) on interrupt
 	video_blit();
 
+	// intermediate variable to avoid: promoted ~unsigned is always non-zero [-Wsign-compare]
+	uint8_t check1 = ~(m_banks[1] & 0x04);
+	uint8_t check2 = ~(m_banks[1] & 0x08);
+
 	// Italian DL doesn't like it if coins held too long
-    if (~(m_banks[1] & 0x04))
+    if (check1)
 	{
 		static int coinCount = 0;
 		if (coinCount >= 6)
@@ -160,7 +164,7 @@ void laireuro::do_nmi()
 		}
 		coinCount++;
 	}
-    if (~(m_banks[1] & 0x08))
+    if (check2)
 	{
 		static int coinCount = 0;
 		if (coinCount >= 6)
