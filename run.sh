@@ -1,9 +1,13 @@
-#!/bin/sh
+#!/bin/bash
 
 SCRIPT_DIR=`dirname "$0"`
 if realpath / >/dev/null; then SCRIPT_DIR=$(realpath "$SCRIPT_DIR"); fi
 DAPHNE_BIN=daphne.bin
 DAPHNE_SHARE=~/.daphne
+
+function STDERR () {
+	/bin/cat - 1>&2
+}
 
 echo "Daphne Launcher : Script dir is $SCRIPT_DIR"
 cd "$SCRIPT_DIR"
@@ -17,9 +21,9 @@ if [ "$1" = "-fullscreen" ]; then
 fi
 
 if [ -z "$1" ] ; then
-    echo "Specify a game to try: "
+    echo "Specify a game to try: " | STDERR
     echo
-    echo "\t$0 [-fullscreen] <gamename>"
+    echo "$0 [-fullscreen] <gamename>" | STDERR
 
 
     for game in ace astron badlands bega cliff cobra esh galaxyr gpworld interstellar lair lair2 mach3 rb sdq tq uvt; do
@@ -31,8 +35,8 @@ if [ -z "$1" ] ; then
     done
     if [ "$uninstalled" ]; then
 	echo
-	echo "Games not found in ~/.daphne/vldp*: "
-	echo "$uninstalled" | fold -s -w60 | sed 's/^ //; s/^/\t/'
+	echo "Games not found in ~/.daphne/vldp*: " | STDERR
+	echo "$uninstalled" | fold -s -w60 | sed 's/^ //; s/^/\t/' | STDERR
     fi
     if [ -z "$installed" ]; then
 	cat <<EOF 
@@ -42,8 +46,8 @@ Error: No games installed. DVDs can be purchased from DigitalLeisure.com.
 EOF
     else   
 	echo
-	echo "Games available: "
-	echo "$installed" | fold -s -w60 | sed 's/^ //; s/^/\t/'
+	echo "Games available: " | STDERR
+	echo "$installed" | fold -s -w60 | sed 's/^ //; s/^/\t/' | STDERR
     fi
     exit 1
 fi
@@ -79,12 +83,13 @@ EXIT_CODE=$?
 if [ "$EXIT_CODE" -ne "0" ] ; then
 	if [ "$EXIT_CODE" -eq "127" ]; then
 		echo ""
-		echo "Daphne failed to start."
-		echo "This is probably due to a library problem."
-		echo "Run ./daphne.bin directly to see which libraries are missing."
+		echo "Daphne failed to start." | STDERR
+		echo "This is probably due to a library problem." | STDERR
+		echo "Run ./daphne.bin directly to see which libraries are missing." | STDERR
 		echo ""
 	else
-		echo "DaphneLoader failed with an unknown exit code : $EXIT_CODE."
+		echo "DaphneLoader failed with an unknown exit code : $EXIT_CODE." | STDERR
 	fi
+	exit $EXIT_CODE
 fi
 
