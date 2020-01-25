@@ -26,7 +26,7 @@ if [ -z "$1" ] ; then
     echo "$0 [-fullscreen] <gamename>" | STDERR
 
 
-    for game in ace astron badlands bega cliff cobra esh galaxyr gpworld interstellar lair lair2 mach3 rb sdq tq uvt; do
+    for game in ace astron badlands bega cliff cobra esh galaxyr gpworld interstellar lair lair2 mach3 roadblaster sdq tq uvt; do
 	if ls ~/.daphne/vldp*/$game >/dev/null 2>&1; then
 	    installed="$installed $game"
 	else
