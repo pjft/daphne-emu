@@ -54,7 +54,8 @@ endif
 
 
 # Platform specific cflags defined in the Makefile.vars file
-CFLAGS += ${PFLAGS} ${DEFINE_STATIC_VLDP} ${DEFINE_STATIC_SINGE} -Wall
+#export CFLAGS = ${PFLAGS} ${DEFINE_STATIC_VLDP} ${DEFINE_STATIC_SINGE} -Wall -Werror
+export CFLAGS = ${PFLAGS} ${DEFINE_STATIC_VLDP} ${DEFINE_STATIC_SINGE} -Wall
 
 OBJS = ldp-out/*.o cpu/*.o game/*.o io/*.o timer/*.o ldp-in/*.o video/*.o \
 	sound/*.o daphne.o cpu/x86/*.o scoreboard/*.o ${SINGE_OBJS} ${VLDP_OBJS} 
@@ -99,4 +100,3 @@ testvldp:	testvldp.c
 	set -e; $(CXX) -MM $(CFLAGS) $< \
                 | sed 's^\($*\)\.o[ :]*^\1.o $@ : ^g' > $@; \
                 [ -s $@ ] || rm -f $@
-
