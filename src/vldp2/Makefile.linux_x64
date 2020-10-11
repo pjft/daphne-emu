@@ -14,7 +14,7 @@ CC = gcc
 
 # Standard version 
 #DFLAGS = -O3 -funroll-loops -fPIC -Wno-attributes
-#DFLAGS = -O3 -funroll-loops -fPIC 
+DFLAGS = -O3 -funroll-loops -fPIC 
 
 CFLAGS = ${DFLAGS} `sdl-config --cflags` -I./include 
 LIBS = `sdl-config --libs` 
