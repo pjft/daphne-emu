@@ -568,7 +568,7 @@ void bega::cpu_mem_write(Uint16 addr, Uint8 value)
       // main rom (0x4000 - 0xFFFF)
       else if (addr >= 0x4000)
       {
-         sprintf(s, "Error! write to main rom at %x", addr);
+         sprintf(s, "Error! write to main rom at %x : %u", addr, value);
          printline(s);
       }
 
