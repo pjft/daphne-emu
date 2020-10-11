@@ -4,6 +4,8 @@
 #include <string.h>
 #include "6809infc.h"
 #include "cpu.h"
+#include "../io/conout.h"
+#include "../io/conin.h"
 #include "../game/game.h"
 
 #ifdef WIN32
@@ -38,11 +40,19 @@ static int LoadWord(int addr)
 
 static void StoreByte(int addr, int value)
 {
+	char s[81] = {0};
+	sprintf(s, "Storebyte: %u, %u", addr, value);
+    printline(s);
+
 	g_game->cpu_mem_write(static_cast<Uint16>(addr & 0xffff), (value & 0xff));
 }
 
 static void StoreWord(int addr, int value)
 {
+	char s[81] = {0};
+	sprintf(s, "Storeword: %u, %u", addr, value);
+    printline(s);
+
 	g_game->cpu_mem_write(static_cast<Uint16>(addr & 0xffff), ((value >> 8) & 0xff));
 	g_game->cpu_mem_write(static_cast<Uint16>((addr + 1) & 0xffff), (value & 0xff));
 }

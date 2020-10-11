@@ -24,6 +24,8 @@
 #include <stdio.h>
 //#include "debug.h"
 #include "../game/game.h"
+#include "../io/conout.h"
+#include "../io/conin.h"
 
 // NOT SAFE FOR MULTIPLE NES_6502'S
 static NES_6502 *NES_6502_nes = NULL;
@@ -105,5 +107,8 @@ uint8 NES_6502::MemoryRead(uint32 addr)
 
 void NES_6502::MemoryWrite(uint32 addr, uint8 data)
 {
+  char s[81] = {0};
+  sprintf(s, "NES MemoryWrite: %4u, %u", addr, data);
+  printline(s);
   g_game->cpu_mem_write(static_cast<uint16>(addr & 0xffff), data);
 }
