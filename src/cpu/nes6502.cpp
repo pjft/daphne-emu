@@ -2445,7 +2445,7 @@ end_execute:
 
    /* store local copy of regs */
    STORE_LOCAL_REGS();
-
+   printline("Finished executing cycles");
    /* Return our actual amount of executed cycles */
    return (cpu.total_cycles - g_old_cycles);	// MPO : changed old_cycles to g_old_cycles
 }

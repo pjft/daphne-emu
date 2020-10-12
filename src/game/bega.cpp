@@ -365,6 +365,9 @@ void bega::do_nmi()
 
 Uint8 bega::cpu_mem_read(Uint16 addr)
 {
+   char s[81] = {0};
+   sprintf(s, "bega::cpu_mem_read: %u", addr);
+   printline(s);
 //   char s[81] = {0};
    Uint8 result;
 
@@ -478,6 +481,10 @@ Uint8 bega::cpu_mem_read(Uint16 addr)
 void bega::cpu_mem_write(Uint16 addr, Uint8 value)
 {
    char s[81] = {0};
+
+   char sm[81] = {0};
+   sprintf(sm, "bega::cpu_mem_write: %u, %u", addr, value);
+   printline(sm);
 
    if (cpu_getactivecpu() == 0)
    {

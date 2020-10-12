@@ -443,7 +443,9 @@ void cpu_execute()
 						printline("Cycles: execute callback");
 						// get us up to our expected elapsed MS
 						elapsed_cycles = (cpu->execute_callback)((Uint32) cycles_to_execute);
-						printline("Finished execute callback");
+						char sm[81] = {0};
+					    sprintf(sm, "Finished execute callback: %u elapsed cycles", elapsed_cycles);
+					    printline(sm);						
 						cpu->total_cycles_executed += elapsed_cycles;	// always track how many cycles have elapsed
 					}
 					// else we have an active event going on, check to see if we need to execute less cycles in order to fire event
