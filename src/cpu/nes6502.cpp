@@ -72,7 +72,7 @@
 
 // MPO : we don't want to use the jumptable if we're in CPU_DEBUG mode because otherwise we'll never break
 #if defined(__GNUC__) && !defined(NES6502_DISASM) && !defined(CPU_DEBUG)
-#define  NES6502_JUMPTABLE
+//#define  NES6502_JUMPTABLE
 #endif /* __GNUC__ */
 
 
@@ -1461,7 +1461,7 @@ printline("NES6502_JUMPTABLE defined");
    };
 
 #else /* !NES6502_JUMPTABLE */
-#define  OPCODE_BEGIN(xx)  case 0x##xx:
+#define  OPCODE_BEGIN(xx)  case 0x##xx: printline(xx);
 #define  OPCODE_END        break;
 #endif /* !NES6502_JUMPTABLE */
 
