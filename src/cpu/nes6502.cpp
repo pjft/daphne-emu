@@ -302,6 +302,9 @@
       char s[181] = {0};\
       sprintf(s, "RELATIVE_BRANCH: TRUE: btemp: : %u, PC: %u, condition: %u, final PC: %u", btemp, PC, ((int8) btemp + (PC & 0x00FF)) & 0x100, PC + ((int8) btemp));\
       printline(s);\
+      char sd[300] = {0};\
+      sprintf(sd, "btemp: : %u, PC: %u, PC&0x00FF: %u, btemp+pc&0x00ff: %u, &0x100", btemp, PC, (PC & 0x00FF), ((int8) btemp + (PC & 0x00FF)), ((int8) btemp + (PC & 0x00FF)) & 0x100);\
+      printline(sd);\
       if (((int8) btemp + (PC & 0x00FF)) & 0x100) \
          ADD_CYCLES(1); \
       ADD_CYCLES(3); \
