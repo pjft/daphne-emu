@@ -298,10 +298,10 @@
 { \
    if (condition) \
    { \
+      IMMEDIATE_BYTE(btemp); \
       char s[81] = {0};\
       sprintf(s, "RELATIVE_BRANCH: TRUE: IMMEDIATE_BYTE: : %u, PC: %u, condition: %u, final PC: %u", btemp, PC, ((int8) btemp + (PC & 0x00FF)) & 0x100, PC + ((int8) btemp));\
       printline(s);\
-      IMMEDIATE_BYTE(btemp); \
       if (((int8) btemp + (PC & 0x00FF)) & 0x100) \
          ADD_CYCLES(1); \
       ADD_CYCLES(3); \
