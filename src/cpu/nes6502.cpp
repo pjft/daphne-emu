@@ -300,15 +300,15 @@
    { \
       IMMEDIATE_BYTE(btemp); \
       char s[181] = {0};\
-      sprintf(s, "RELATIVE_BRANCH: TRUE: btemp: : %u, PC: %u, condition: %u, final PC: %u", btemp, PC, ((int8) btemp + (PC & 0x00FF)) & 0x100, PC + ((int8) btemp));\
+      sprintf(s, "RELATIVE_BRANCH: TRUE: btemp: : %u, PC: %u, condition: %u, final PC: %u", btemp, PC, ((int8_t) btemp + (PC & 0x00FF)) & 0x100, PC + ((int8_t) btemp));\
       printline(s);\
       char sd[300] = {0};\
-      sprintf(sd, "btemp: : %u, PC: %u, PC&0x00FF: %u, int8: %d, btemp+pc&0x00ff: %u, &0x100: %u", btemp, PC, (PC & 0x00FF), ((int8_t)btemp),((int8) btemp + (PC & 0x00FF)), ((int8) btemp + (PC & 0x00FF)) & 0x100);\
+      sprintf(sd, "btemp: : %u, PC: %u, PC&0x00FF: %u, int8: %d, btemp+pc&0x00ff: %u, &0x100: %u", btemp, PC, (PC & 0x00FF), ((int8_t)btemp),((int8) btemp + (PC & 0x00FF)), ((int8_t) btemp + (PC & 0x00FF)) & 0x100);\
       printline(sd);\
-      if ((((int8) btemp) + (PC & 0x00FF)) & 0x100) \
+      if ((((int8_t) btemp) + (PC & 0x00FF)) & 0x100) \
          ADD_CYCLES(1); \
       ADD_CYCLES(3); \
-      PC += ((int8) btemp); \
+      PC += ((int8_t) btemp); \
    } \
    else \
    { \
