@@ -376,6 +376,7 @@ void cpu_execute()
 	// clear each cpu
 	while (cpu)
 	{
+		printline("Checking IRQs");
 		for (int i = 0; i < MAX_IRQS; i++)
 		{
 			cpu->uIRQTickCount[i] = 0;
@@ -406,9 +407,11 @@ void cpu_execute()
 		for (unsigned int uInterleaveCount = 1; uInterleaveCount <= g_uInterleavePerMs; uInterleaveCount++)
 		{
 			cpu = g_head;
+			printline("Running one CPU");
 			// go through each cpu and execute 1 ms worth of cycles
 			while (cpu)
 			{
+				printline("Copying context");
 				// if we are required to copy the cpu context, then set the context for the current cpu
 				if (cpu->must_copy_context)
 				{
@@ -430,12 +433,14 @@ void cpu_execute()
 					// make sure this will fit in a 32-bit number
 					assert((u64ExpectedCycles - cpu->total_cycles_executed) < (unsigned int) (1 << 31));
 #endif
+					printline("Checking cycles");
 					// calculate # of cycles to execute
 					cycles_to_execute = (Uint32) (u64ExpectedCycles - cpu->total_cycles_executed);
 
 					// if we have no upcoming event
 					if (cpu->uEventCyclesEnd == 0)
 					{
+						printline("Cycles: execute callback");
 						// get us up to our expected elapsed MS
 						elapsed_cycles = (cpu->execute_callback)((Uint32) cycles_to_execute);
 
@@ -447,6 +452,7 @@ void cpu_execute()
 						// loop while we have the possibility of an event looming near in our future
 						while (cpu->uEventCyclesEnd != 0)
 						{
+							printline("Looping cycles");
 							unsigned int uCyclesTilEvent = 0;
 	
 							// if we haven't yet reached our event
@@ -483,7 +489,7 @@ void cpu_execute()
 								break;
 							}
 						}
-
+						printline("Copying context");
 						// get us up to our expected elapsed MS
 						elapsed_cycles = (cpu->execute_callback)((Uint32) cycles_to_execute);
 
@@ -503,7 +509,7 @@ void cpu_execute()
 #endif
 
 				// NOW WE CHECK TO SEE IF IT'S TIME TO DO AN NMI
-
+				printline("Checking NMIs");
 				// if NMI's are enabled
 				if (cpu->uNMIMicroPeriod)
 				{
@@ -518,10 +524,12 @@ void cpu_execute()
 					}
 				}
 
+				printline("If there are NMIs");
 				// if we have an NMI waiting
 				// (this can be created either by a timer, or by calling cpu_generate_nmi)
 				if (cpu->pending_nmi_count != 0)
 				{
+					printline("Doing NMIs");
 					g_game->do_nmi();
 					nmi_asserted = true;
 					--cpu->pending_nmi_count;
@@ -529,6 +537,7 @@ void cpu_execute()
 
 				// NOW WE CHECK TO SEE IF IT'S TIME TO DO AN IRQ
 
+				printline("Checking for IRQs");
 				// go through each IRQ
 				for (i = 0; i < MAX_IRQS; i++)
 				{
@@ -555,6 +564,7 @@ void cpu_execute()
 						// we don't want to do IRQ's and NMI's at the same time
 						if (!nmi_asserted)
 						{
+							printline("Doing IRQ");
 							g_game->do_irq(i);
 #ifdef DEBUG
 							assert(cpu->pending_irq_count[i] > 0);
@@ -583,6 +593,7 @@ void cpu_execute()
 #define CPU_DIAG_ACCURACY 24000000
 				// the bigger the #, the more accurate the result
 
+				printline("Doing stats");
 				// if it's time to print some statistics
 				if (cd_cycle_count[g_active_cpu] >= CPU_DIAG_ACCURACY)
 				{
@@ -616,21 +627,24 @@ void cpu_execute()
 
 
 
-
+				printline("Must copy context");
 				// if we are required to copy the cpu context, then preserve the context for the next time around
 				if (cpu->must_copy_context)
 				{
+					printline("Copying context");
 					(cpu->getcontext_callback)(cpu->context);	// preserve registers
 				}
-
+				printline("Next CPU");
 				cpu = cpu->next_cpu; // go to the next cpu
 
 			} // end while looping through each cpu
 		} // end for loop
 
+		printline("Pre-think");
 		// 1 ms has elapsed, so notify the LDP to keep it in sync (we must do this after every ms)
 		g_ldp->pre_think();
  
+ 		printline("Updating sound buffer");
 		// Update the sound buffers for the sound chips
 		update_soundbuffer();
 
@@ -642,7 +656,7 @@ void cpu_execute()
 #ifdef CPU_DIAG
 		unsigned int uStartMs = actual_elapsed_ms;
 #endif
-
+		printline("Catching up");
 		// if we're behind, then compute how far behind we are ...
 		if (actual_elapsed_ms > g_expected_elapsed_ms)
 		{
@@ -682,6 +696,7 @@ void cpu_execute()
 
 		do
 		{
+			printline("If paused?");
 			// limit checks for input events to every 16 ms
 			//(this is really expensive in Windows for some reason)
 			actual_elapsed_ms = elapsed_ms_time(last_inputcheck);
