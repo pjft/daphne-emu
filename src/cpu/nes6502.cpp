@@ -1461,7 +1461,7 @@ printline("NES6502_JUMPTABLE defined");
    };
 
 #else /* !NES6502_JUMPTABLE */
-#define  OPCODE_BEGIN(xx)  case 0x##xx: printline(0x##xx);
+#define  OPCODE_BEGIN(xx)  case 0x##xx: sprintf(sc, "%x", 0x##xx);printline(sc);
 #define  OPCODE_END        break;
 #endif /* !NES6502_JUMPTABLE */
 
