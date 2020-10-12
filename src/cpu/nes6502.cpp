@@ -298,6 +298,9 @@
 { \
    if (condition) \
    { \
+      char s[81] = {0};\
+      sprintf(s, "RELATIVE_BRANCH: TRUE: IMMEDIATE_BYTE: : %u, PC: %u, condition: %u, final PC: %u", btemp, PC, ((int8) btemp + (PC & 0x00FF)) & 0x100, PC + ((int8) btemp));\
+      printline(s);\
       IMMEDIATE_BYTE(btemp); \
       if (((int8) btemp + (PC & 0x00FF)) & 0x100) \
          ADD_CYCLES(1); \
@@ -314,6 +317,9 @@
 #define JUMP(address) \
 { \
    PC = bank_readword((address)); \
+   char s[81] = {0}; \
+   sprintf(s, "JUMP: new PC: %u, address: %u", PC, address); \
+   printline(s);\
 }
 
 /*
@@ -529,6 +535,9 @@
 
 #define BNE() \
 { \
+   char s[81] = {0}; \
+   sprintf(s, "BNE: %u, %u", z_flag, (0!=z_flag)); \
+   printline(s); \
    RELATIVE_BRANCH(0 != z_flag); \
 }
 
@@ -639,6 +648,9 @@
 #define DEX() \
 { \
    X--; \
+   char s[81] = {0};\
+   sprintf(s, "DEX: X - and setting N and Z flags to: %u", X);\
+   printline(s);\
    SET_NZ_FLAGS(X); \
    ADD_CYCLES(2); \
 }
@@ -725,17 +737,28 @@
 
 #define JMP_ABSOLUTE() \
 { \
+   char s[81] = {0}; \
+   sprintf(s, "JMP_ABSOLUTE: %u", PC); \
+   printline(s); \
    JUMP(PC); \
    ADD_CYCLES(3); \
 }
 
 #define JSR() \
 { \
+   char s[81] = {0}; \
+   uint8 origpc = PC;\
    PC++; \
+   uint8 pca = PC;\
    PUSH(PC >> 8); \
+   uint8 pcb = PC;\
    PUSH(PC & 0xFF); \
+   uint8 pcc = PC;\
    JUMP(PC - 1); \
+   uint8 pcd = PC-1;\
    ADD_CYCLES(6); \
+   sprintf(s, "JSR: Start PC: %u, PC Add: %u, PUSH1: %u, PUSH1: %u, JUMP: %u", origpc, pca, pcb, pcc, pcd);\
+   printline(s);\
 }
 
 /* undocumented */
@@ -765,6 +788,9 @@
 
 #define LDX(cycles, read_func) \
 { \
+   char s[81] = {0}; \
+   sprintf(s, "LDX: add cycles: %u", cycles);\
+   printline(s);\
    read_func(X); \
    SET_NZ_FLAGS(X);\
    ADD_CYCLES(cycles); \
@@ -967,9 +993,15 @@
 
 #define RTS() \
 { \
+   char s[81] = {0};\
+   uint8 origpc = PC;\
    PC = PULL(); \
+   uint8 newpc = PC;\
    PC = (PC | (PULL() << 8)) + 1; \
+   uint8 newerpc = PC;\
    ADD_CYCLES(6); \
+   sprintf(s, "RTS: orig PC: %u, pulled PC: %u, handles PC: %u", origpc, newpc, newerpc);\
+   printline(s);\
 }
 
 /* undocumented */
@@ -1174,6 +1206,9 @@
 
 #define TXS() \
 { \
+   char s[81] = {0}; \
+   sprintf(s, "TXS: Setting S to X");\
+   printline(s);\
    S = X; \
    ADD_CYCLES(2); \
 }
