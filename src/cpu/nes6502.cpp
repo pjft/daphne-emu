@@ -1249,6 +1249,8 @@ static uint8 mem_readbyte(uint32 address)
 {
    nes6502_memread *mr;
 
+   char s[81] = {0};
+   
    /* TODO: following cases are N2A03-specific */
    /* RAM */
 //   if (address < 0x800)
@@ -1261,13 +1263,20 @@ static uint8 mem_readbyte(uint32 address)
    {
       for (mr = cpu.read_handler; mr->min_range != 0xFFFFFFFF; mr++)
       {
-         if (address >= mr->min_range && address <= mr->max_range)
-            return mr->read_func(address);
+         if (address >= mr->min_range && address <= mr->max_range) {
+            uint8 data = mr->read_func(address);
+            sprintf(s, "readbyte in IF: %4u / %u, %u data", address, address, data);
+            printline(s);
+            return data;
+         }
       }
    }
+   uint8 data = bank_readbyte(address); 
+   sprintf(s, "readbyte: %4u / %u, %u data", address, address, data);
+   printline(s);
 
    /* return paged memory */
-   return bank_readbyte(address);
+   return data;
 }
 
 /* write a byte of data to 6502 memory */
