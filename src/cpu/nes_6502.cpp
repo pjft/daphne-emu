@@ -102,7 +102,11 @@ void NES_6502::MemoryWrite(uint32 addr, uint8 data)
 */
 uint8 NES_6502::MemoryRead(uint32 addr)
 {
-  return g_game->cpu_mem_read(static_cast<uint16>(addr & 0xffff));
+  uint8 data = g_game->cpu_mem_read(static_cast<uint16>(addr & 0xffff));
+  char s[81] = {0};
+  sprintf(s, "NES MemoryRead: %4u, %u", addr, data);
+  printline(s); 
+  return data;
 }
 
 void NES_6502::MemoryWrite(uint32 addr, uint8 data)
