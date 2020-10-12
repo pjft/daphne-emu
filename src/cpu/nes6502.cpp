@@ -51,6 +51,8 @@
 #include <stdlib.h>
 #include <string.h>	// for memcpy
 #include "nes6502.h"
+#include "../io/conout.h"
+#include "../io/conin.h"
 //#include "dis6502.h" //DCR
 
 #ifdef TARGET_CPU_PPC
@@ -1271,6 +1273,9 @@ static uint8 mem_readbyte(uint32 address)
 /* write a byte of data to 6502 memory */
 static void mem_writebyte(uint32 address, uint8 value)
 {
+   char s[81] = {0};
+   sprintf(s, "mem_writebyte: %4u, %u", address, value);
+   printline(s);
    nes6502_memwrite *mw;
 
    /* RAM */
@@ -1383,7 +1388,10 @@ uint32 g_old_cycles = 0;	// MPO : moved this here so other functions could acces
 //int nes6502_execute(int remaining_cycles)
 // MATT : changed this to match callback prototype
 unsigned int nes6502_execute(unsigned int cycles_to_execute)
-{
+{   
+   char sc[81] = {0};
+   sprintf(sc, "Executing NES6502: %u cycles", cycles_to_execute);
+   printline(sc);
 //   int old_cycles = cpu.total_cycles;
 	g_old_cycles = cpu.total_cycles;	// MPO
    int remaining_cycles = cycles_to_execute;
@@ -1400,7 +1408,7 @@ unsigned int nes6502_execute(unsigned int cycles_to_execute)
    uint8 A, X, Y, S;
 
 #ifdef NES6502_JUMPTABLE
-
+printline("NES6502_JUMPTABLE defined");
 #define  OPCODE_BEGIN(xx)  op##xx:
 #define  OPCODE_END \
    if (remaining_cycles <= 0) \
@@ -1449,7 +1457,7 @@ unsigned int nes6502_execute(unsigned int cycles_to_execute)
 #endif /* !NES6502_JUMPTABLE */
 
    GET_GLOBAL_REGS();
-
+   printline("Check IRQs pending");
    if (cpu.int_pending && remaining_cycles)
    {
       if (0 == i_flag)
@@ -1470,11 +1478,13 @@ unsigned int nes6502_execute(unsigned int cycles_to_execute)
    }
       
 #ifdef NES6502_JUMPTABLE
+   char so[81] = {0};
+   sprintf(so, "OPCODES: %x", PC+1);
+   printline(so);
    /* fetch first instruction */
    OPCODE_END
-
 #else /* !NES6502_JUMPTABLE */
-
+   printline("NOT NES6502 JUMPTABLE");
    /* Continue until we run out of cycles */
    while (remaining_cycles > 0)
    {
@@ -1489,6 +1499,9 @@ unsigned int nes6502_execute(unsigned int cycles_to_execute)
 	  GET_GLOBAL_REGS();
 #endif
 	  // end MPO
+     char s[81] = {0};
+     sprintf(s, "OPCODES: %x", PC+1);
+     printline(s);
 
       /* Fetch and execute instruction */
       switch (bank_readbyte(PC++))
