@@ -36,12 +36,10 @@ const TValue *luaV_tofloat (const TValue *obj, TValue *n) {
   if (ttisnumber(obj)) return obj;
   if (ttisstring(obj) && luaO_str2d(svalue(obj), &num)) {
     setnvalue(n, num);
-    return n;
   }
-  else {
+  else
     setnvalue(n, 0);
-    return n;
-  }
+  return n;
 }
 
 const TValue *luaV_tonumber (const TValue *obj, TValue *n) {
