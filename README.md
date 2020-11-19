@@ -62,7 +62,13 @@ convention within the game sub-directory.
 
 ## Running Daphne or SINGE
 
-This version of daphne comes with simple command line frontends:
+**Note:** Now provided is a more fully featured `run.sh` in the `custom` sub-directory of this repo. \
+Utilising new `-keymapfile` argument for key-swapping, on flight based games, and advanced \
+configuration using `-bank` dip-switch configurations.
+
+[Advanced run.sh](custom/README.md)
+
+This version of daphne comes with simple command line frontends _(also see above)_:
 
     ./run.sh lair
     ./singe.sh maddog
