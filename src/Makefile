@@ -99,4 +99,3 @@ testvldp:	testvldp.c
 	set -e; $(CXX) -MM $(CFLAGS) $< \
                 | sed 's^\($*\)\.o[ :]*^\1.o $@ : ^g' > $@; \
                 [ -s $@ ] || rm -f $@
-
