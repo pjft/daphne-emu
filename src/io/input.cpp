@@ -112,7 +112,8 @@ int g_key_defs[SWITCH_COUNT][2] =
 // not a fixed system dont initialize button functions unless its 
 // from dapinput.sh
 
-int joystick_buttons_map[10] = {
+int joystick_buttons_map[18] = {
+	-1,	// button 0
 	-1,	// button 1
 	-1,	// button 2
 	-1,	// button 3
@@ -123,6 +124,13 @@ int joystick_buttons_map[10] = {
 	-1,	// button 8
 	-1	// button 9
 	-1	// button 10
+	-1	// button 11
+	-1	// button 12
+	-1	// button 13
+	-1	// button 14
+	-1	// button 15
+	-1	// button 16
+	-1	// button 17
 };
 #else
 // button mapping for gp2x
