@@ -59,6 +59,7 @@ case "$1" in
 	VLDP_DIR="vldp_dl"
 	FASTBOOT="-fastboot"		   
 	BANKS="-bank 1 00100001 -bank 0 00000010"
+	DAPINPUT="-useoverlaysb 2"
 	;;
     astron)
 	VLDP_DIR="vldp"
@@ -87,6 +88,7 @@ case "$1" in
 	;;
     dle21)
 	VLDP_DIR="vldp_dl"
+	DAPINPUT="-useoverlaysb 2"
 
 	if [ "$PROTOTYPE" ]; then
 		BANKS="-bank 1 10110011 -bank 0 11011000"
@@ -120,6 +122,7 @@ case "$1" in
 	VLDP_DIR="vldp_dl"
 	FASTBOOT="-fastboot"		   
 	BANKS="-bank 1 00110011 -bank 0 10011000"
+	DAPINPUT="-useoverlaysb 2"
 	;;
     lair2)
 	VLDP_DIR="vldp_dl"
@@ -132,6 +135,7 @@ case "$1" in
     sae)
 	VLDP_DIR="vldp_dl"
 	BANKS="-bank 1 01100011 -bank 0 10011000"
+	DAPINPUT="-useoverlaysb 2"
 	;;
     sdq)
 	VLDP_DIR="vldp"
@@ -141,6 +145,7 @@ case "$1" in
     tq)
 	VLDP_DIR="vldp_dl"
 	BANKS=" -bank 0 00010000"
+	DAPINPUT="-useoverlaysb 2"
 	;;
     uvt)
 	VLDP_DIR="vldp"
