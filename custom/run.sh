@@ -58,7 +58,7 @@ case "$1" in
     ace)
 	VLDP_DIR="vldp_dl"
 	FASTBOOT="-fastboot"		   
-	BANKS="-bank 1 00100001 -bank 0 00000010"
+	BANKS="-bank 1 00000001 -bank 0 00000010"
 	DAPINPUT="-useoverlaysb 2"
 	;;
     astron)
@@ -79,28 +79,26 @@ case "$1" in
     cliff)
 	VLDP_DIR="vldp"
 	FASTBOOT="-fastboot"
-	BANKS="-bank 1 01000000 -bank 0 00000000 -cheat"
+	BANKS="-bank 1 00000000 -bank 0 00000000"
 	;;
     cobraab)
 	VLDP_DIR="vldp"
 	DAPINPUT="-keymapfile flight.ini"
-	BANKS="-cheat"
 	;;
     dle21)
 	VLDP_DIR="vldp_dl"
 	DAPINPUT="-useoverlaysb 2"
 
 	if [ "$PROTOTYPE" ]; then
-		BANKS="-bank 1 10110011 -bank 0 11011000"
+		BANKS="-bank 1 10110111 -bank 0 11011000"
 	else
-		BANKS="-bank 1 00110011 -bank 0 11011000"
+		BANKS="-bank 1 00110111 -bank 0 11011000"
 	fi
 	;;
     esh)
 	# Run a fixed ROM so disable CRC
 	VLDP_DIR="vldp"
 	FASTBOOT="-nocrc"
-	BANKS="-cheat"
 	;;
     galaxy)
 	VLDP_DIR="vldp"
@@ -121,20 +119,18 @@ case "$1" in
     lair)
 	VLDP_DIR="vldp_dl"
 	FASTBOOT="-fastboot"		   
-	BANKS="-bank 1 00110011 -bank 0 10011000"
+	BANKS="-bank 1 00110111 -bank 0 10011000"
 	DAPINPUT="-useoverlaysb 2"
 	;;
     lair2)
 	VLDP_DIR="vldp_dl"
-	BANKS="-cheat"
 	;;
     roadblaster)
 	VLDP_DIR="vldp"
-	BANKS="-cheat"
 	;;
     sae)
 	VLDP_DIR="vldp_dl"
-	BANKS="-bank 1 01100011 -bank 0 10011000"
+	BANKS="-bank 1 01100111 -bank 0 10011000"
 	DAPINPUT="-useoverlaysb 2"
 	;;
     sdq)
@@ -144,12 +140,12 @@ case "$1" in
 	;;
     tq)
 	VLDP_DIR="vldp_dl"
-	BANKS=" -bank 0 00010000"
+	BANKS=" -bank 0 00000000"
 	DAPINPUT="-useoverlaysb 2"
 	;;
     uvt)
 	VLDP_DIR="vldp"
-	BANKS="-bank 0 01000001"
+	BANKS="-bank 0 01000000"
 	DAPINPUT="-keymapfile flight.ini"
 	;;
     *) echo -e "\nInvalid game selected\n"
