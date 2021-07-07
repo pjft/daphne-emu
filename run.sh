@@ -56,6 +56,7 @@ case "$1" in
     lair|lair2|ace|tq)
 	VLDP_DIR="vldp_dl"
 	FASTBOOT="-fastboot"		   
+	OVERLAY="-useoverlaysb 2"
 	;;
     *) VLDP_DIR="vldp"
 esac
@@ -64,6 +65,7 @@ esac
 ./$DAPHNE_BIN $1 vldp \
 $FASTBOOT \
 $FULLSCREEN \
+$OVERLAY \
 -framefile $DAPHNE_SHARE/$VLDP_DIR/$1/$1.txt \
 -homedir $DAPHNE_SHARE \
 -datadir $DAPHNE_SHARE \

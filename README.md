@@ -7,6 +7,15 @@ on one's PC.
 
 The official website for Daphne is http://www.daphne-emu.com.
 
+## Daphne has now been superseded by hypseus (SDL2)
+
+This project has now been superseded by **hypseus-singe**
+
+https://github.com/DirtBagXon/hypseus-singe
+
+Below is the original Daphne codebase preserved for posterity
+
+
 ---
 
 As development for Daphne has stopped, this repository is intended as 
@@ -62,7 +71,13 @@ convention within the game sub-directory.
 
 ## Running Daphne or SINGE
 
-This version of daphne comes with simple command line frontends:
+**Note:** Now provided is a more fully featured `run.sh` in the `custom` sub-directory of this repo. \
+Utilising new `-keymapfile` argument for key-swapping, on flight based games, and advanced \
+configuration using `-bank` dip-switch configurations.
+
+[Advanced run.sh](custom/README.md)
+
+This version of daphne comes with simple command line frontends _(also see above)_:
 
     ./run.sh lair
     ./singe.sh maddog
